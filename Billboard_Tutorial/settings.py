@@ -11,22 +11,27 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+dotenv_path = os.path.join(BASE_DIR, '.env')
+load_dotenv(dotenv_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4cb&8@wv8$^axwh&cmoaypk%=vdzo22b^t1olap#ox)^qdv67*'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
+SITE_ID = 1
 
 # Application definition
 
@@ -98,6 +103,44 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # was 'none'
+ACCOUNT_FORMS = {'signup': 'sign.forms.BasicSignupForm'}
+# позволит избежать дополнительных действий и активирует аккаунт сразу,
+# как только мы перейдем по ссылке
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+# количество дней, в течение которых будет доступна ссылка на подтверждение регистрации
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+
+EMAIL_HOST = os.getenv('EMAIL_HOST')  # адрес сервера Яндекс-почты для всех один и тот же
+EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
+# ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user,
+# иными словами, это всё то что идёт до собаки
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # пароль от почты
+EMAIL_SUBJECT_PREFIX = '[Django Tutorial] --> '
+# Яндекс и Mail.Ru используют ssl, подробнее о том, что это, почитайте в дополнительных источниках,
+# но включать его здесь обязательно
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
+
+ADMINS = [
+    ('romab-gm', os.getenv('ADMIN_1_EMAIL')),
+    ('romab-ya', os.getenv('ADMIN_2_EMAIL')),
+    # список всех админов в формате ('имя', 'их почта')
+]
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # Internationalization
