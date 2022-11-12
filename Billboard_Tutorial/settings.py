@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
 
     'billboard.apps.BillboardConfig',
-    #'authentication.apps.AuthenticationConfig',
+    'authentication.apps.AuthenticationConfig',
 ]
 
 MIDDLEWARE = [

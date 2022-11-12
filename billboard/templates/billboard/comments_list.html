@@ -1,4 +1,4 @@
-{% extends 'gamestock/base.html' %}
+{% extends 'billboard/base.html' %}
 {% block title %}
 {{ post.title }} | {{post.category}}
 {% endblock title %}
@@ -8,11 +8,11 @@
   <div class="card p-2">
     <div class="card-header">
       <h3 class="card-title">
-        <a class="navbar-brand" href="{% url 'gamestock:post_detail' post.pk %}">
+        <a class="navbar-brand" href="{% url 'billboard:post_detail' post.pk %}">
           {{ post.title }}
         </a>
       </h3>
-      <a class="navbar-brand" href="{% url 'gamestock:post_detail' post.pk %}">
+      <a class="navbar-brand" href="{% url 'billboard:post_detail' post.pk %}">
         <span class="badge bg-secondary float-end">{{ post.category }}</span>
       </a>
       <small class="text-muted ms-1">
@@ -21,7 +21,7 @@
         </b>
         <span class="fst-italic">
         </span>
-        <a href="{% url 'gamestock:by_author' post.author %}">
+        <a href="{% url 'billboard:by_author' post.author %}">
           <span class="fst-italic">{{ post.author }}</span>
         </a>
         <b>
@@ -42,7 +42,7 @@
   {% for comment in comments %}
   <div class="shadow-sm p-3 my-2 bg-body rounded">
     <div class="d-flex justify-content-between p-1">
-      <a href="{% url 'gamestock:by_author' comment.author %}">
+      <a href="{% url 'billboard:by_author' comment.author %}">
 
         <h5 class="mb-1">{{ comment.author }}</h5>
 
@@ -62,7 +62,7 @@
             Accepted
           </button>
           {%else %}
-          <a href="{% url 'gamestock:comment_accept' post.pk comment.pk %}">
+          <a href="{% url 'billboard:comment_accept' post.pk comment.pk %}">
             <button class="btn btn-success">
               Accept
             </button>
@@ -75,13 +75,13 @@
             Rejected
           </button>
           {%else%}
-          <a href="{% url 'gamestock:comment_reject' post.pk comment.pk %}">
+          <a href="{% url 'billboard:comment_reject' post.pk comment.pk %}">
             <button class="btn btn-warning">
               Reject
             </button>
           </a>
           {% endif %}
-          <a href="{% url 'gamestock:comment_delete' comment.pk %}">
+          <a href="{% url 'billboard:comment_delete' comment.pk %}">
             <button class="btn btn-danger">
               Delete
             </button>
@@ -95,7 +95,7 @@
   <div class="text-center">
     <h3 class="fw-bold">No comments yet</h3>
     <p class="lead ">Check later and keep posting!</p>
-    <a href="{% url 'gamestock:post_list' %}">
+    <a href="{% url 'billboard:post_list' %}">
       <button type="button" class="btn btn-primary btn-lg">
         To Game Stock
       </button>

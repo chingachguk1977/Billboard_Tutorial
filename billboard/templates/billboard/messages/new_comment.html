@@ -8,12 +8,12 @@
 
 <body>
   <h2>You've got a new comment for
-    <a href="https://gamestock.com{% url 'gamestock:post_detail' comment.post.pk %}">
+    <a href="https://127.0.0.1{% url 'billboard:post_detail' comment.post.pk %}">
       {{comment.post.title}}
     </a>
   </h2>
   <p>To view this comment by {{ comment.author }}
-    <a href="https://gamestock.com{% url 'gamestock:post_detail' comment.post.pk %}">click here</a>
+    <a href="https://127.0.0.1{% url 'billboard:post_detail' comment.post.pk %}">click here</a>
   </p>
 </body>
 

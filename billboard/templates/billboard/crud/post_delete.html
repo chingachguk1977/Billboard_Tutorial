@@ -1,4 +1,4 @@
-{% extends 'gamestock/base.html' %}
+{% extends 'billboard/base.html' %}
 
 {% block title %}
 Delete Post
@@ -23,7 +23,7 @@ Delete Post
     </b>
     <span class="fst-italic">
     </span>
-    <a href="{% url 'gamestock:by_author' post.author %}">
+    <a href="{% url 'billboard:by_author' post.author %}">
       <span class="fst-italic">{{ post.author }}</span>
     </a>
     <b>
@@ -35,7 +35,7 @@ Delete Post
   </p>
   <form method="POST">
     {% csrf_token %}
-    <a href="{% url 'gamestock:post_delete' post.pk %}">
+    <a href="{% url 'billboard:post_delete' post.pk %}">
       <button class="btn btn-danger">
         Delete
       </button>

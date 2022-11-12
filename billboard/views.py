@@ -14,7 +14,7 @@ from .utils.permissions import IsAuthorMixin, NotIsAuthorMixin
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
-    template_name = 'gamestock/front.html'
+    template_name = 'billboard/front.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -37,10 +37,10 @@ class PostDetail(DetailView):
 class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostCreateForm
-    template_name = 'gamestock/crud/post_create.html'
+    template_name = 'billboard/crud/post_create.html'
 
     def get_success_url(self):
-        return reverse('gamestock:post_list')
+        return reverse('billboard:post_list')
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -53,10 +53,10 @@ class PostUpdate(IsAuthorMixin, UpdateView):
     model = Post
     pk_url_kwarg = 'post_pk'
     form_class = PostCreateForm
-    template_name = 'gamestock/crud/post_create.html'
+    template_name = 'billboard/crud/post_create.html'
 
     def get_success_url(self):
-        return reverse('gamestock:post_list')
+        return reverse('billboard:post_list')
 
     def form_valid(self, form):
         messages.success(self.request, 'Success!')
@@ -65,9 +65,9 @@ class PostUpdate(IsAuthorMixin, UpdateView):
 
 class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
-    template_name = 'gamestock/crud/post_delete.html'
-    success_url = '/gamestock/'
-    permission_required = ('gamestock.post_delete')
+    template_name = 'billboard/crud/post_delete.html'
+    success_url = '/billboard/'
+    permission_required = ('billboard.post_delete')
     context_object_name = 'post'
 
     def get_object(self, **kwargs):
@@ -87,7 +87,7 @@ class CommentsList(IsAuthorMixin, View):
             'post': post
         }
 
-        return render(request, 'gamestock/comments_list.html', context)
+        return render(request, 'billboard/comments_list.html', context)
 
 
 class CommentCreate(NotIsAuthorMixin, View):
@@ -100,7 +100,7 @@ class CommentCreate(NotIsAuthorMixin, View):
             'post': post
         }
 
-        return render(request, 'gamestock/crud/comment_create.html', context)
+        return render(request, 'billboard/crud/comment_create.html', context)
 
     def post(self, request, *args, **kwargs):
         form = CommentCreateForm(request.POST)
@@ -113,7 +113,7 @@ class CommentCreate(NotIsAuthorMixin, View):
             comment.post = Post.objects.get(pk=post_pk)
             comment.save()
 
-        return redirect('gamestock:post_list')
+        return redirect('billboard:post_list')
 
 
 class CommentAccept(IsAuthorMixin, View):
@@ -140,9 +140,9 @@ class CommentReject(IsAuthorMixin, View):
 
 class CommentDelete(LoginRequiredMixin, DeleteView):
     model = Comment
-    template_name = 'gamestock/crud/comment_delete.html'
-    success_url = '/gamestock/'
-    permission_required = ('gamestock.comment_delete')
+    template_name = 'billboard/crud/comment_delete.html'
+    success_url = '/billboard/'
+    permission_required = ('billboard.comment_delete')
     context_object_name = 'comment'
 
     def get_object(self, **kwargs):
@@ -156,7 +156,7 @@ class DashboardView(View):
         context = {
             'posts': request.user.post_set.all(),
         }
-        return render(request, 'gamestock/dashboard.html', context)
+        return render(request, 'billboard/dashboard.html', context)
 
 
 class CategoryView(ListView):
@@ -170,7 +170,7 @@ class CategoryView(ListView):
 
         }
 
-        return render(request, 'gamestock/category_list.html', context)
+        return render(request, 'billboard/category_list.html', context)
 
 
 class ByAuthorView(ListView):
@@ -183,4 +183,4 @@ class ByAuthorView(ListView):
             'posts': qs,
         }
 
-        return render(request, 'gamestock/by_author.html', context)
+        return render(request, 'billboard/by_author.html', context)
